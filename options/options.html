@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TL;DR — Settings</title>
+    <style>
+      :root {
+        --bg: #0f0f0f;
+        --card: #1c1c1c;
+        --border: #333;
+        --text: #f1f1f1;
+        --muted: #aaa;
+        --accent: #0d9488;
+      }
+      @media (prefers-color-scheme: light) {
+        :root { --bg: #f7f7f7; --card: #fff; --border: #e2e2e2; --text: #0f0f0f; --muted: #606060; }
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font: 15px/1.5 Roboto, system-ui, sans-serif;
+      }
+      .wrap { max-width: 720px; margin: 0 auto; padding: 36px 24px 80px; }
+      .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+      .brand img { width: 40px; height: 40px; border-radius: 9px; }
+      .brand h1 { font-size: 24px; margin: 0; }
+      .brand small { display: block; color: var(--muted); font-size: 13px; font-weight: 400; }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 20px;
+        margin-top: 18px;
+      }
+      .card h2 { font-size: 15px; margin: 0 0 6px; }
+      .muted { color: var(--muted); font-size: 13px; }
+      label.row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 14px; }
+      input[type="text"], input[type="password"], textarea {
+        width: 100%;
+        background: var(--bg);
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 9px 11px;
+        font: inherit;
+        margin-top: 8px;
+      }
+      textarea { resize: vertical; min-height: 130px; font-family: ui-monospace, monospace; font-size: 12px; }
+      button {
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 9px 16px;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+      button.danger { background: #dc2626; }
+      button:disabled { opacity: 0.5; cursor: default; }
+      a { color: var(--accent); }
+      .stat { display: inline-block; margin-right: 28px; }
+      .stat b { font-size: 24px; display: block; line-height: 1.1; }
+      .saved { color: #16a34a; font-size: 13px; margin-left: 10px; }
+      .row-actions { display: flex; gap: 10px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
+      /* toggle */
+      .switch { position: relative; width: 44px; height: 26px; flex: 0 0 auto; }
+      .switch input { opacity: 0; width: 0; height: 0; }
+      .track { position: absolute; inset: 0; background: var(--border); border-radius: 999px; transition: 0.2s; }
+      .track::before { content: ""; position: absolute; width: 20px; height: 20px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: 0.2s; }
+      .switch input:checked + .track { background: var(--accent); }
+      .switch input:checked + .track::before { transform: translateX(18px); }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="brand">
+        <img src="../icons/icon-128.png" alt="" />
+        <div>
+          <h1>TL;DR</h1>
+          <small>Too Long; Didn't Read — AI sentiment of a video's comments</small>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Gemini API key</h2>
+        <div class="muted">
+          Free: go to
+          <a href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer">aistudio.google.com/apikey</a>
+          → Create API key. No card, no billing. Stored only in your browser, sent only to Google.
+        </div>
+        <div id="keyArea"></div>
+      </div>
+
+      <div class="card">
+        <h2>Behavior</h2>
+        <label class="row">
+          <span>
+            Auto-read on every video
+            <div class="muted">Analyze automatically when you scroll to the comments. Off = a "Read the comments" button instead.</div>
+          </span>
+          <span class="switch"><input type="checkbox" id="autoAnalyze" /><span class="track"></span></span>
+        </label>
+      </div>
+
+      <div class="card">
+        <h2>Comment prompt</h2>
+        <div class="muted">Use <code>{{comments}}</code> where the scraped comments go. End with the <code>Audience score: X/10</code> line to get the sentiment pill.</div>
+        <textarea id="prompt" spellcheck="false"></textarea>
+        <div class="row-actions">
+          <button id="savePrompt">Save prompt</button>
+          <button class="ghost" id="resetPrompt">Reset to default</button>
+          <span class="saved" id="promptSaved" hidden>Saved.</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Usage</h2>
+        <div>
+          <span class="stat"><b id="usageAll">0</b><span class="muted">all-time reads</span></span>
+          <span class="stat"><b id="usageToday">0</b><span class="muted">today</span></span>
+        </div>
+        <div class="muted" style="margin-top: 10px;">Free Gemini tier is ~500 requests/day — plenty for daily use.</div>
+      </div>
+    </div>
+    <script src="options.js"></script>
+  </body>
+</html>
