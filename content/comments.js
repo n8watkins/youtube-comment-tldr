@@ -1,9 +1,9 @@
 /**
- * TL;DR — Too Long; Didn't Read (the comments).
+ * TL;DR: Too Long; Didn't Read (the comments).
  *
  * Sibling to TL;DW but for YouTube COMMENTS only: scrape the top comments, send
  * them to the background for a Gemini sentiment read, and inject a compact card
- * above the comments — same visual language as the TL;DW summary panel.
+ * above the comments, same visual language as the TL;DW summary panel.
  *
  * SPA-safe (YouTube rewrites the page on navigation): idempotent mount keyed to
  * the current video id, re-resolved on every nav. Results are cached per video.
@@ -12,7 +12,7 @@
 const log = (...a) => console.log("[TL;DR]", ...a);
 const PANEL_ID = "tldr-comments-panel";
 const CACHE_KEY = "commentCache";
-const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // comments move faster than videos — 1 day
+const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // comments move faster than videos, so 1 day
 const CACHE_MAX = 200;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -233,7 +233,7 @@ function showSetup(t) {
   const head = header(t, [openBtn]);
   const msg = document.createElement("div");
   msg.textContent =
-    "Add a free Gemini API key to read the room — instant AI sentiment of this video's comments.";
+    "Add a free Gemini API key to read the room: instant AI sentiment of this video's comments.";
   Object.assign(msg.style, { fontSize: "13px", color: t.sub, marginTop: "8px" });
   panel.append(head, msg);
   mountPanel(panel);
