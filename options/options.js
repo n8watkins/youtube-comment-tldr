@@ -1,8 +1,8 @@
-/** TL;DR options page. Plain JS — no build step. Reads/writes chrome.storage.local. */
+/** TL;DR options page. Plain JS, no build step. Reads/writes chrome.storage.local. */
 
 const DEFAULT_PROMPT =
   "These are the top viewer comments on this YouTube video. In 2-3 sentences, " +
-  "summarize the overall audience sentiment — what people liked, disliked, or " +
+  "summarize the overall audience sentiment: what people liked, disliked, or " +
   "are debating. If multiple commenters mention specific timestamps or moments, " +
   "include those. Be specific and don't invent anything. End your response with " +
   'exactly one line in this format: "Audience score: X/10" (10 = overwhelmingly ' +

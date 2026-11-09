@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "TL;DR — Comment Sentiment for YouTube",
+  "name": "TL;DR: Comment Sentiment for YouTube",
   "short_name": "TL;DR",
   "version": "0.1.0",
   "description": "Too Long; Didn't Read: instant AI sentiment of a YouTube video's top comments, injected right on the page.",
