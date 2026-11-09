@@ -1,0 +1,24 @@
+# The Direct push alarm from release-kit (docs/PRIVATE_REPOS.md there). This
+# private repo on GitHub Free can't have rulesets, so this reports, after the
+# fact, a push to the default branch that came from no merged pull request, a
+# force push, and a moved or deleted v* tag: the run fails and an issue labeled
+# "release-kit: direct push" is opened or commented on.
+name: Direct push alarm
+
+on:
+  push:
+    branches: [main, master]
+    tags: ["v*"]
+  delete:
+
+permissions:
+  contents: read
+
+jobs:
+  alarm:
+    if: github.repository == 'n8watkins/youtube-comment-tldr'
+    permissions:
+      contents: read # the pushed commits
+      pull-requests: read # which pull request each commit came from
+      issues: write # open or comment on the "release-kit: direct push" issue
+    uses: n8watkins/release-kit/.github/workflows/direct-push.yml@v2.8.1
